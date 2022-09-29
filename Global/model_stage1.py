@@ -95,7 +95,7 @@ class GlobalRestoration:
     def __init__(self, device):
         # opt = TestOptions().parse(save=False)
         class OPT:
-            gpu_ids = [device]
+            gpu_ids = [device if device >= 0 else None]
             test_mode = "Full"
             Quality_restore = True
             Scratch_and_Quality_restore = False
