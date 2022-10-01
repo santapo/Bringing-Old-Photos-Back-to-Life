@@ -40,7 +40,7 @@ def data_transforms_rgb_old(img):
     w, h = img.size
     A = img
     if w < 256 or h < 256:
-        A = transforms.Scale(256, Image.BILINEAR)(img)
+        A = transforms.Resize(256, Image.BILINEAR)(img)
     return transforms.CenterCrop(256)(A)
 
 

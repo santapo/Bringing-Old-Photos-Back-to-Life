@@ -47,10 +47,10 @@ def get_transform(opt, params, method=Image.BICUBIC, normalize=True):
     transform_list = []
     if 'resize' in opt.resize_or_crop:
         osize = [opt.loadSize, opt.loadSize]
-        transform_list.append(transforms.Scale(osize, method))   
+        transform_list.append(transforms.Resize(osize, method))   
     elif 'scale_width' in opt.resize_or_crop:
     #    transform_list.append(transforms.Lambda(lambda img: __scale_width(img, opt.loadSize, method)))  ## Here , We want the shorter side to match 256, and Scale will finish it.
-        transform_list.append(transforms.Scale(256,method))
+        transform_list.append(transforms.Resize(256,method))
 
     if 'crop' in opt.resize_or_crop:
         if opt.isTrain:

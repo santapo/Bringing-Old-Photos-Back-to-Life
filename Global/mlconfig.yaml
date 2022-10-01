@@ -45,6 +45,7 @@ mode:
   env:
     default:                # All variable in default mode will be existed in other mode 
       device: 0
+      # test:
     dev:                    # Development mode 
       debug: True
     prod:                   # Production mode 

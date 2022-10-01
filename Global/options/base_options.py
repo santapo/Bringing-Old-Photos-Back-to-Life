@@ -341,6 +341,7 @@ class BaseOptions:
         self.opt = self.parser.parse_args()
         self.opt.isTrain = self.isTrain  # train or test
 
+        # import ipdb; ipdb.set_trace()
         str_ids = self.opt.gpu_ids.split(",")
         self.opt.gpu_ids = []
         for str_id in str_ids:

@@ -29,9 +29,9 @@ def make_dataset(dir):
     return images
 
 ### Modify these 3 lines in your own environment
-indir="/home/ziyuwan/workspace/data/temp_old"
-target_folders=['VOC','Real_L_old','Real_RGB_old']
-out_dir ="/home/ziyuwan/workspace/data/temp_old"
+indir="/mnt/ssd/santapo/Bringing-Old-Photos-Back-to-Life/Global/datasets"
+target_folders=['VOC','imageRs']
+out_dir ="/mnt/ssd/santapo/Bringing-Old-Photos-Back-to-Life/Global/datasets"
 ###
 
 if os.path.exists(out_dir) is False:
@@ -43,6 +43,8 @@ for target_folder in target_folders:
     curr_out_file = os.path.join(os.path.join(out_dir, '%s.bigfile'%(target_folder)))
     image_lists = make_dataset(curr_indir)
     image_lists.sort()
+    print(target_folder)
+    print(len(image_lists))
     with open(curr_out_file, 'wb') as wfid:
         # write total image number
         wfid.write(struct.pack('i', len(image_lists)))

@@ -2,6 +2,7 @@
 # Licensed under the MIT License.
 
 import os
+import base64
 # from collections import OrderedDict
 # from torch.autograd import Variable
 # from Global.options.test_options import TestOptions
@@ -40,7 +41,7 @@ def data_transforms_rgb_old(img):
     w, h = img.size
     A = img
     if w < 256 or h < 256:
-        A = transforms.Scale(256, Image.BILINEAR)(img)
+        A = transforms.Resize(256, Image.BILINEAR)(img)
     return transforms.CenterCrop(256)(A)
 
 
@@ -95,7 +96,8 @@ class GlobalRestoration:
     def __init__(self, device):
         # opt = TestOptions().parse(save=False)
         class OPT:
-            gpu_ids = [device if device >= 0 else None]
+            gpu_ids = [device]
+            print(gpu_ids)
             test_mode = "Full"
             Quality_restore = True
             Scratch_and_Quality_restore = False
@@ -144,9 +146,16 @@ class GlobalRestoration:
         grid = vutils.make_grid((generated.data.cpu() + 1.0) / 2.0, nrow=1, padding=0, normalize=True)
         # Add 0.5 after unnormalizing to [0, 255] to round to nearest integer
         ndarr = grid.mul(255).add_(0.5).clamp_(0, 255).permute(1, 2, 0).to("cpu", torch.uint8).numpy()
-        cv2.imwrite("test.jpg", ndarr)
-
-        return ndarr
+        # cv2.imwrite("test.jpg", ndarr)
+        # ndarr = np.ascontiguousarray(ndarr)
+        # import ipdb; ipdb.set_trace()
+        _, im_arr = cv2.imencode('.jpg', ndarr)
+        im_bytes = im_arr.tobytes()
+        im_b64 = base64.b64encode(im_bytes)
+        # cv2.imwrite("test.jpg", ndarr)
+        # res = base64.b64encode(ndarr)
+        # import ipdb; ipdb.set_trace()
+        return im_b64.decode("utf-8")
 
 if __name__ == "__main__":
 

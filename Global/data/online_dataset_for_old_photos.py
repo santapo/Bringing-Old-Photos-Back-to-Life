@@ -180,17 +180,17 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         self.dir_AB = opt.dataroot
         if self.isImage:
 
-            self.load_img_dir_L_old=os.path.join(self.dir_AB,"Real_L_old.bigfile")
-            self.load_img_dir_RGB_old=os.path.join(self.dir_AB,"Real_RGB_old.bigfile")
-            self.load_img_dir_clean=os.path.join(self.dir_AB,"VOC_RGB_JPEGImages.bigfile")
+            self.load_img_dir_L_old=os.path.join(self.dir_AB,"imageRs.bigfile")
+            # self.load_img_dir_RGB_old=os.path.join(self.dir_AB,"Real_RGB_old.bigfile")
+            self.load_img_dir_clean=os.path.join(self.dir_AB,"VOC.bigfile")
 
             self.loaded_imgs_L_old=BigFileMemoryLoader(self.load_img_dir_L_old)
-            self.loaded_imgs_RGB_old=BigFileMemoryLoader(self.load_img_dir_RGB_old)
+            # self.loaded_imgs_RGB_old=BigFileMemoryLoader(self.load_img_dir_RGB_old)
             self.loaded_imgs_clean=BigFileMemoryLoader(self.load_img_dir_clean)
 
         else:
             # self.load_img_dir_clean=os.path.join(self.dir_AB,self.opt.test_dataset)
-            self.load_img_dir_clean=os.path.join(self.dir_AB,"VOC_RGB_JPEGImages.bigfile")
+            self.load_img_dir_clean=os.path.join(self.dir_AB,"VOC.bigfile")
             self.loaded_imgs_clean=BigFileMemoryLoader(self.load_img_dir_clean)
 
         ####
@@ -220,12 +220,12 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         if self.isImage: ## domain A , contains 2 kinds of data: synthetic + real_old
             P=random.uniform(0,2)
             if P>=0 and P<1:
-                if random.uniform(0,1)<0.5:
-                    sampled_dataset=self.loaded_imgs_L_old
-                    self.load_img_dir=self.load_img_dir_L_old
-                else:
-                    sampled_dataset=self.loaded_imgs_RGB_old
-                    self.load_img_dir=self.load_img_dir_RGB_old
+                # if random.uniform(0,1)<0.5:
+                sampled_dataset=self.loaded_imgs_L_old
+                self.load_img_dir=self.load_img_dir_L_old
+                # else:
+                #     sampled_dataset=self.loaded_imgs_RGB_old
+                #     self.load_img_dir=self.load_img_dir_RGB_old
                 is_real_old=1
             if P>=1 and P<2:
                 sampled_dataset=self.filtered_imgs_clean
@@ -261,7 +261,7 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         A=img
         w,h=A.size
         if w<256 or h<256:
-            A=transforms.Scale(256,Image.BICUBIC)(A)
+            A=transforms.Resize(256,Image.BICUBIC)(A)
         ## Since we want to only crop the images (256*256), for those old photos whose size is smaller than 256, we first resize them.
 
         transform_params = get_params(self.opt, A.size)
@@ -351,8 +351,8 @@ class PairOldPhotos(BaseDataset):
         # B = img.crop((w2, 0, w, h))
         w,h=A.size
         if w<256 or h<256:
-            A=transforms.Scale(256,Image.BICUBIC)(A)
-            B=transforms.Scale(256, Image.BICUBIC)(B)
+            A=transforms.Resize(256,Image.BICUBIC)(A)
+            B=transforms.Resize(256, Image.BICUBIC)(B)
 
         # apply the same transform to both A and B
         transform_params = get_params(self.opt, A.size)
