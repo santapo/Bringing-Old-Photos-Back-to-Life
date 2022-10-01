@@ -24,6 +24,15 @@ mlchain run # check swagger at port 8001
 
 #### How to train
 
+- Download training dataset
+
+```
+gdrive download 1xgk7svdjBiEyzyUVoZrCz4PP6dSjVL8S
+gdrive download -r 1ZJMcDq_4QSdXsQo-j4b4k-GgMjhWGgwW
+
+# Using `gdown` instead of `gdrive` if using google colab
+```
+
 - Check and run [Global/data/Create_Bigfile.py](Global/data/Create_Bigfile.py) to create bigfile of your dataset
 ```
 cd Global/data
