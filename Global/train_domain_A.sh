@@ -6,7 +6,7 @@ python train_domain_A.py \
     --label_nc 0 \
     --loadSize 256 \
     --fineSize 256 \
-    --dataroot "/mnt/ssd/santapo/Bringing-Old-Photos-Back-to-Life/Global/datasets" \
+    --dataroot "datasets" \
     --no_instance \
     --resize_or_crop crop_only \
     --batchSize 100 \

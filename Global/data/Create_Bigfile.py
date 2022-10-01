@@ -29,9 +29,9 @@ def make_dataset(dir):
     return images
 
 ### Modify these 3 lines in your own environment
-indir="/mnt/ssd/santapo/Bringing-Old-Photos-Back-to-Life/Global/datasets"
+indir="../datasets"
 target_folders=['VOC','imageRs']
-out_dir ="/mnt/ssd/santapo/Bringing-Old-Photos-Back-to-Life/Global/datasets"
+out_dir ="../datasets"
 ###
 
 if os.path.exists(out_dir) is False:
